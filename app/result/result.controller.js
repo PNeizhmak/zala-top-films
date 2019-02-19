@@ -12,8 +12,7 @@
         vm.title = 'Thanks for staying tuned!';
         
         activate();
- 
-        ////////////////
+
  
         function activate() {
             console.log('Result feature loaded!');

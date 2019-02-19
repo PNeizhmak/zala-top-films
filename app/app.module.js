@@ -31,11 +31,11 @@
                     controllerAs: 'vm'
                 })
         
-                // URL will become '/form/work'
-                .state('form.work', {
-                    url: '/work',
-                    templateUrl: 'app/work/work.html',
-                    controller: 'WorkController',
+                // URL will become '/form/channels'
+                .state('form.channels', {
+                    url: '/channels',
+                    templateUrl: 'app/channels/channels.html',
+                    controller: 'ChannelsController',
                     controllerAs: 'vm'
                 })
         
