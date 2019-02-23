@@ -15,39 +15,33 @@
             $urlRouterProvider.otherwise('/form/personal');
     
             $stateProvider
-                // PARENT STATE: form state
                 .state('form', {
                     url: '/form',
                     templateUrl: 'app/form/form.html',
                     controller: 'FormController'
                 })
-        
-                // NESTED STATES: child states of 'form' state 
-                // URL will become '/form/personal'
+
                 .state('form.personal', {
                     url: '/personal',
                     templateUrl: 'app/personal/personal.html',
                     controller: 'PersonalController',
                     controllerAs: 'vm'
                 })
-        
-                // URL will become '/form/channels'
+
                 .state('form.channels', {
                     url: '/channels',
                     templateUrl: 'app/channels/channels.html',
                     controller: 'ChannelsController',
                     controllerAs: 'vm'
                 })
-        
-                // URL will become '/form/address'
-                .state('form.address', {
-                    url: '/address',
-                    templateUrl: 'app/address/address.html',
-                    controller: 'AddressController',
+
+                .state('form.films', {
+                    url: '/films',
+                    templateUrl: 'app/films/films.html',
+                    controller: 'FilmsController',
                     controllerAs: 'vm'
                 })
 
-                // URL will become '/form/result'
                 .state('form.result', {
                     url: '/result',
                     templateUrl: 'app/result/result.html',
