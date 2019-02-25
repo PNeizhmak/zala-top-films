@@ -31,6 +31,7 @@
                     let domChannels = domData.getElementsByClassName('channel');
 
                     $scope.films = [];
+                    let excludes = ['Кинокомедия', 'Мужское кино'];
 
                     angular.forEach(domChannels, function (value, index) {
                         let channelName = value.getElementsByClassName('channel-name')[0].textContent;
@@ -53,7 +54,12 @@
                         console.log('----------------------');
                         console.log(channelName);
 
-                        let filmObj = value.querySelectorAll('[data-genre-1="1"]');
+                        let filmObj;
+                        if (excludes.indexOf(channelName) >= 0) {
+                            filmObj = value.getElementsByClassName('event-time');
+                        } else {
+                            filmObj = value.querySelectorAll('[data-genre-1="1"]');
+                        }
 
                         angular.forEach(filmObj, function (value, index) {
                             let filmTime = value.innerText.trim();
@@ -67,6 +73,7 @@
                         });
                     });
                     $scope.filmsLength = $scope.films.length;
+                    console.log($scope.groupedFilms);
                 })
                 .error(function (data) {
                     alert(data);
@@ -74,4 +81,11 @@
                 });
 
         }]);
+
+    angular.module('wizardApp')
+    .filter('groupBy', function() {
+        return _.memoize(function(items, field) {
+            return _.groupBy(items, field);
+        });
+    });
 })();
