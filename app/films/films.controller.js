@@ -30,6 +30,8 @@
                     let domData = new DOMParser().parseFromString(data, "text/html");
                     let domChannels = domData.getElementsByClassName('channel');
 
+                    $scope.films = [];
+
                     angular.forEach(domChannels, function (value, index) {
                         let channelName = value.getElementsByClassName('channel-name')[0].textContent;
 
@@ -59,8 +61,12 @@
 
                             let filmTitle = value.nextElementSibling.innerText.trim();
                             console.log(filmTitle);
+
+                            let filmData = {channelName: channelName, filmTime: filmTime, filmTitle: filmTitle};
+                            $scope.films.push(filmData);
                         });
-                    })
+                    });
+                    $scope.filmsLength = $scope.films.length;
                 })
                 .error(function (data) {
                     alert(data);
