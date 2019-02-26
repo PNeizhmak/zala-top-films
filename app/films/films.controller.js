@@ -5,7 +5,7 @@
         .controller('FilmsController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
 
             let vm = this;
-            vm.title = 'Here is the list of films providede by ' + $rootScope.yasnaPlan.name + ' plan: ';
+            vm.title = 'Here is the list of films provided by ' + $rootScope.yasnaPlan.name + ' plan: ';
 
             let today = new Date();
             let dd = today.getDate();
@@ -30,7 +30,7 @@
                     let domData = new DOMParser().parseFromString(data, "text/html");
                     let domChannels = domData.getElementsByClassName('channel');
 
-                    $scope.films = [];
+                    $rootScope.films = [];
                     let excludes = ['Кинокомедия', 'Мужское кино'];
 
                     angular.forEach(domChannels, function (value, index) {
@@ -69,10 +69,10 @@
                             console.log(filmTitle);
 
                             let filmData = {channelName: channelName, filmTime: filmTime, filmTitle: filmTitle};
-                            $scope.films.push(filmData);
+                            $rootScope.films.push(filmData);
                         });
                     });
-                    $scope.filmsLength = $scope.films.length;
+                    $scope.filmsLength = $rootScope.films.length;
                     console.log($scope.groupedFilms);
                 })
                 .error(function (data) {

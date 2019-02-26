@@ -11,7 +11,6 @@
 
         function($stateProvider, $urlRouterProvider) {
 
-            // For any unmatched url, redirect to /form/personal
             $urlRouterProvider.otherwise('/form/personal');
     
             $stateProvider
@@ -42,10 +41,10 @@
                     controllerAs: 'vm'
                 })
 
-                .state('form.result', {
-                    url: '/result',
-                    templateUrl: 'app/result/result.html',
-                    controller: 'ResultController',
+                .state('form.kinopoisk', {
+                    url: '/kinopoisk',
+                    templateUrl: 'app/kinopoisk/kinopoisk.html',
+                    controller: 'KinopoiskController',
                     controllerAs: 'vm'
                 })
         }
