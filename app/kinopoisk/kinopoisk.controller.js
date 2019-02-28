@@ -22,7 +22,9 @@
                             channelName: value.channelName,
                             filmTime: value.filmTime,
                             filmTitle: filmTitle,
-                            kinopoisk: data
+                            filmRating: data[0].ur_rating,
+                            filmYear: data[0].year
+                            // kinopoisk: data
                         };
                         $scope.kinopoiskData.push(filmData);
                         console.log(filmData);
