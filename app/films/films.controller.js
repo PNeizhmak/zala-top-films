@@ -4,6 +4,15 @@
     angular.module('wizardApp')
         .controller('FilmsController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
 
+            $scope.ShowSpinnerStatus = true;
+
+            $scope.ShowSpinner = function () {
+                $scope.ShowSpinnerStatus = true;
+            };
+            $scope.HideSpinner = function () {
+                $scope.ShowSpinnerStatus = false;
+            };
+
             let vm = this;
             vm.title = 'Here is the list of films provided by ' + $rootScope.yasnaPlan.name + ' plan: ';
 
@@ -23,9 +32,10 @@
             $rootScope.matchedChannelsDom = [];
             $rootScope.matchedChannelsNames = [];
 
+            $scope.ShowSpinner();
             $http.get('https://cors-anywhere.herokuapp.com/https://tvset.tut.by/all/' + urlDate + '/filter/allday/?genre%5B0%5D=1')
                 .success(function (data) {
-                    alert("Got the response from tvset.tut.by");
+                    $scope.HideSpinner();
 
                     let domData = new DOMParser().parseFromString(data, "text/html");
                     let domChannels = domData.getElementsByClassName('channel');
@@ -76,7 +86,7 @@
                     console.log($scope.groupedFilms);
                 })
                 .error(function (data) {
-                    alert(data);
+                    $scope.HideSpinner();
                     console.log('Error: ' + data);
                 });
 

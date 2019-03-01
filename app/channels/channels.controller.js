@@ -4,12 +4,22 @@
     angular.module('wizardApp')
         .controller('ChannelsController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
 
+            $scope.ShowSpinnerStatus = true;
+
+            $scope.ShowSpinner = function () {
+                $scope.ShowSpinnerStatus = true;
+            };
+            $scope.HideSpinner = function () {
+                $scope.ShowSpinnerStatus = false;
+            };
+
             let vm = this;
             vm.title = 'Here is the list of your TV channels';
 
+            $scope.ShowSpinner();
             $http.get('https://cors-anywhere.herokuapp.com/http://yasna.by')
                 .success(function (data) {
-                    alert("Got the response from yasna.by");
+                    $scope.HideSpinner();
 
                     let yasnaToTutbyChannels = new Map([
                         ['ТНТ Интернэшнл', 'ТНТ Int (Беларусь)'],
@@ -50,7 +60,6 @@
                     $rootScope.channels = [];
                     angular.forEach(yasnaModals, function (value, index) {
                         if (value.querySelector('#myModalLabel').textContent === $rootScope.yasnaPlan.name) {
-                            alert('Selected plan is equals to yasna.by plan');
 
                             let channelsDom = value.querySelectorAll('a');
                             $scope.channelsSize = channelsDom.length;
@@ -69,7 +78,7 @@
                     console.log($rootScope.channels);
                 })
                 .error(function (data) {
-                    alert(data);
+                    $scope.HideSpinner();
                     console.log('Error: ' + data);
                 });
         }]);
