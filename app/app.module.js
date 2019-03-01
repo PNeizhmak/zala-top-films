@@ -1,18 +1,13 @@
-(function() {
+(function () {
     'use strict';
 
-    // Creating our angular app and inject ui-router 
-    // =============================================================================
-    var app = angular.module('wizardApp', ['ui.router'])
+    let app = angular.module('wizardApp', ['ui.router']);
 
-    // Configuring our states 
-    // =============================================================================
     app.config(['$stateProvider', '$urlRouterProvider',
-
-        function($stateProvider, $urlRouterProvider) {
+        function ($stateProvider, $urlRouterProvider) {
 
             $urlRouterProvider.otherwise('/form/personal');
-    
+
             $stateProvider
                 .state('form', {
                     url: '/form',

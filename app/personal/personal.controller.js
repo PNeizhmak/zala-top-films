@@ -4,7 +4,7 @@
     angular.module('wizardApp')
         .controller('PersonalController', ['$rootScope', '$scope', function ($rootScope, $scope) {
 
-            var vm = this;
+            let vm = this;
             vm.title = 'Please select your Yasna plan';
 
             //$scope.test = $scope.formData.yasna;

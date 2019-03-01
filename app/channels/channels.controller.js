@@ -2,24 +2,17 @@
     'use strict';
 
     angular.module('wizardApp')
-        .controller('ChannelsController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+        .controller('ChannelsController', ['$rootScope', '$scope', '$http', 'preloaderService', function ($rootScope, $scope, $http, preloaderService) {
 
-            $scope.ShowSpinnerStatus = true;
-
-            $scope.ShowSpinner = function () {
-                $scope.ShowSpinnerStatus = true;
-            };
-            $scope.HideSpinner = function () {
-                $scope.ShowSpinnerStatus = false;
-            };
+            preloaderService.initSpinner($scope);
 
             let vm = this;
             vm.title = 'Here is the list of your TV channels';
 
-            $scope.ShowSpinner();
+            preloaderService.showSpinner($scope);
             $http.get('https://cors-anywhere.herokuapp.com/http://yasna.by')
                 .success(function (data) {
-                    $scope.HideSpinner();
+                    preloaderService.hideSpinner($scope);
 
                     let yasnaToTutbyChannels = new Map([
                         ['ТНТ Интернэшнл', 'ТНТ Int (Беларусь)'],
@@ -58,7 +51,7 @@
                     let yasnaModals = domData.querySelectorAll('[id^=Modal]');
 
                     $rootScope.channels = [];
-                    angular.forEach(yasnaModals, function (value, index) {
+                    angular.forEach(yasnaModals, function (value) {
                         if (value.querySelector('#myModalLabel').textContent === $rootScope.yasnaPlan.name) {
 
                             let channelsDom = value.querySelectorAll('a');
@@ -78,7 +71,7 @@
                     console.log($rootScope.channels);
                 })
                 .error(function (data) {
-                    $scope.HideSpinner();
+                    preloaderService.hideSpinner($scope);
                     console.log('Error: ' + data);
                 });
         }]);

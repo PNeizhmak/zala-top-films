@@ -2,16 +2,9 @@
     'use strict';
 
     angular.module('wizardApp')
-        .controller('FilmsController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+        .controller('FilmsController', ['$rootScope', '$scope', '$http', 'preloaderService', function ($rootScope, $scope, $http, preloaderService) {
 
-            $scope.ShowSpinnerStatus = true;
-
-            $scope.ShowSpinner = function () {
-                $scope.ShowSpinnerStatus = true;
-            };
-            $scope.HideSpinner = function () {
-                $scope.ShowSpinnerStatus = false;
-            };
+            preloaderService.initSpinner($scope);
 
             let vm = this;
             vm.title = 'Here is the list of films provided by ' + $rootScope.yasnaPlan.name + ' plan: ';
@@ -32,10 +25,10 @@
             $rootScope.matchedChannelsDom = [];
             $rootScope.matchedChannelsNames = [];
 
-            $scope.ShowSpinner();
+            preloaderService.showSpinner($scope);
             $http.get('https://cors-anywhere.herokuapp.com/https://tvset.tut.by/all/' + urlDate + '/filter/allday/?genre%5B0%5D=1')
                 .success(function (data) {
-                    $scope.HideSpinner();
+                    preloaderService.hideSpinner($scope);
 
                     let domData = new DOMParser().parseFromString(data, "text/html");
                     let domChannels = domData.getElementsByClassName('channel');
@@ -58,7 +51,7 @@
                     console.log($rootScope.matchedChannelsNames.length);
                     console.log($rootScope.matchedChannelsDom.length);
 
-                    angular.forEach($rootScope.matchedChannelsDom, function (value, index) {
+                    angular.forEach($rootScope.matchedChannelsDom, function (value) {
 
                         let channelName = value.getElementsByClassName('channel-name')[0].textContent;
                         console.log('----------------------');
@@ -71,7 +64,7 @@
                             filmObj = value.querySelectorAll('[data-genre-1="1"]');
                         }
 
-                        angular.forEach(filmObj, function (value, index) {
+                        angular.forEach(filmObj, function (value) {
                             let filmTime = value.innerText.trim();
                             console.log(filmTime);
 
@@ -86,7 +79,7 @@
                     console.log($scope.groupedFilms);
                 })
                 .error(function (data) {
-                    $scope.HideSpinner();
+                    preloaderService.hideSpinner($scope);
                     console.log('Error: ' + data);
                 });
 

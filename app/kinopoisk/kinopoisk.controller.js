@@ -2,30 +2,23 @@
     'use strict';
 
     angular.module('wizardApp')
-        .controller('KinopoiskController', ['$rootScope', '$scope', '$http', '$q', function ($rootScope, $scope, $http, $q) {
+        .controller('KinopoiskController', ['$rootScope', '$scope', '$http', 'preloaderService', function ($rootScope, $scope, $http, preloaderService) {
 
-            $scope.ShowSpinnerStatus = true;
-
-            $scope.ShowSpinner = function () {
-                $scope.ShowSpinnerStatus = true;
-            };
-            $scope.HideSpinner = function () {
-                $scope.ShowSpinnerStatus = false;
-            };
+            preloaderService.initSpinner($scope);
 
             let vm = this;
             vm.title = 'Here is the list of films sorted by kinopoisk raiting';
 
             $scope.kinopoiskData = [];
 
-            angular.forEach($rootScope.films, function (value, index) {
+            angular.forEach($rootScope.films, function (value) {
 
                 let filmTitle = value.filmTitle;
 
                 let headers = new Headers();
                 headers.append('Access-Control-Allow-Origin', '*');
 
-                $scope.ShowSpinner();
+                preloaderService.showSpinner($scope);
                 $http.get('https://cors-anywhere.herokuapp.com/https://www.kinopoisk.ru/handler_search.php?q=' + filmTitle + '&topsuggest=true', {headers: headers})
                     .success(function (data) {
                         let filmData = {
@@ -40,14 +33,14 @@
                         console.log(filmData);
                     })
                     .error(function (data) {
-                        $scope.HideSpinner();
+                        preloaderService.hideSpinner($scope);
                         console.log('Error: ' + data);
                     });
                 $scope.promise = $http.get('https://cors-anywhere.herokuapp.com/https://www.kinopoisk.ru/handler_search.php?q=' + filmTitle + '&topsuggest=true', {headers: headers});
             });
 
             $scope.promise.then(function () {
-                $scope.HideSpinner();
+                preloaderService.hideSpinner($scope);
                 console.log($scope.kinopoiskData);
             });
         }]);
