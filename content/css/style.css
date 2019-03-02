@@ -26,23 +26,23 @@
 }
 
 /* active buttons */
-#status-buttons a.active span.round-tabs.one { 
-    background: rgb(34, 194, 34); 
+#status-buttons a.active span.round-tabs.one {
+    background: rgb(34, 194, 34);
     color: #fff
 }
 
-#status-buttons a.active span.round-tabs.two { 
-    background: #febe29; 
+#status-buttons a.active span.round-tabs.two {
+    background: #febe29;
     color: #fff
 }
 
-#status-buttons a.active span.round-tabs.three { 
-    background: #3e5e9a; 
+#status-buttons a.active span.round-tabs.three {
+    background: #3e5e9a;
     color: #fff
 }
 
-#status-buttons a.active span.round-tabs.four { 
-    background: #f1685e; 
+#status-buttons a.active span.round-tabs.four {
+    background: #f1685e;
     color: #fff
 }
 
@@ -86,4 +86,8 @@ html, body, container {
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+.top_rated_films {
+    background-color: antiquewhite;
 }
